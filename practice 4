@@ -5,10 +5,10 @@ ASSIGNED(PNO,EMPNO)
 A. Get count of employees working on project.
 B. Get details of employee working on project pr002.
 C. Get details of employee working on project DBMS.
-CREATE DATABASE practice;
-use database practice;
 
 --------------------------------------------------------------------------
+CREATE DATABASE practice;
+use practice;
 
 -- Create the PROJECT table
 CREATE TABLE PROJECT (

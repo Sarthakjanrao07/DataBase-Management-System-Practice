@@ -1,7 +1,7 @@
 Task 1 :
 
 Consider the following Relations. It defines Library Database Schema BOOK (Book_ISBN
-[PK], Title[Not Null], Publisher_ Name, Price[Check Price&gt;0], Date_Of_Publication(Default
+[PK], Title[Not Null], Publisher_ Name, Price[Check Price>0], Date_Of_Publication(Default
 SYSDATE), Book_Copy)
 BOOK_AUTHORS (Book_ISBN ,Author_Name [PK],Author_City[Default “Pune‟],
 Phone[UNIQUE])

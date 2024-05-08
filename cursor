@@ -1,0 +1,67 @@
+-- Creating a sample table to store student data
+CREATE TABLE students (
+    student_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    marks INT
+);
+
+-- Inserting sample data into the table
+INSERT INTO students (name, marks) VALUES ('John', 85);
+INSERT INTO students (name, marks) VALUES ('Alice', 70);
+INSERT INTO students (name, marks) VALUES ('Bob', 60);
+INSERT INTO students (name, marks) VALUES ('Emma', 95);
+INSERT INTO students (name, marks) VALUES ('Mike', 75);
+INSERT INTO students (name, marks) VALUES ('Sarah', 80);
+INSERT INTO students (name, marks) VALUES ('David', 55);
+INSERT INTO students (name, marks) VALUES ('Emily', 65);
+INSERT INTO students (name, marks) VALUES ('James', 90);
+INSERT INTO students (name, marks) VALUES ('Olivia', 78);
+INSERT INTO students (name, marks) VALUES ('Daniel', 88);
+INSERT INTO students (name, marks) VALUES ('Sophia', 82);
+
+-- Creating a stored procedure to calculate grades for top 10 students
+DELIMITER //
+CREATE PROCEDURE calculate_grades()
+BEGIN
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE v_name VARCHAR(50);
+    DECLARE v_marks INT;
+    DECLARE v_grade CHAR(1);
+    
+    -- Declare cursor for fetching student data
+    DECLARE student_cursor CURSOR FOR 
+        SELECT name, marks FROM students ORDER BY marks DESC;
+    
+    -- Declare continue handler for cursor
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    
+    OPEN student_cursor;
+    
+    -- Loop through cursor to fetch data for top 10 students
+    student_loop: LOOP
+        FETCH student_cursor INTO v_name, v_marks;
+        IF done THEN
+            LEAVE student_loop;
+        END IF;
+        
+        -- Calculate grade based on marks
+        IF v_marks >= 90 THEN
+            SET v_grade := 'A';
+        ELSEIF v_marks >= 80 THEN
+            SET v_grade := 'B';
+        ELSEIF v_marks >= 70 THEN
+            SET v_grade := 'C';
+        ELSE
+            SET v_grade := 'D';
+        END IF;
+        
+        -- Display student information and grade
+        SELECT CONCAT('Name: ', v_name, ', Marks: ', v_marks, ', Grade: ', v_grade);
+    END LOOP;
+    
+    CLOSE student_cursor;
+END //
+DELIMITER ;
+
+-- Call the stored procedure to calculate grades
+CALL calculate_grades();

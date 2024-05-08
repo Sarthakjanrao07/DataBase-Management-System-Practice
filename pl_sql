@@ -1,0 +1,35 @@
+create table Result(
+Name varchar(20),
+Marks INT,
+Grade varchar(20)
+);
+DELIMITER //
+
+CREATE PROCEDURE proc_Grade(IN student_name VARCHAR(255), IN marks INT)
+BEGIN
+    DECLARE grade VARCHAR(50);
+
+    IF marks >= 990 AND marks <= 1500 THEN
+        SET grade = 'Distinction';
+    ELSEIF marks >= 900 AND marks <= 989 THEN
+        SET grade = 'First Class';
+    ELSEIF marks >= 825 AND marks <= 899 THEN
+        SET grade = 'Higher Second Class';
+    ELSE
+        SET grade = 'Fail';
+    END IF;
+
+
+    INSERT INTO Result (Name, Marks, Grade) VALUES (student_name, marks, grade);
+END//
+
+DELIMITER ;
+
+-- Example of using the procedure in a PL/SQL block
+BEGIN
+
+    DECLARE marks INT DEFAULT 950;
+    DECLARE student_name VARCHAR(255) DEFAULT 'John';
+
+    CALL proc_Grade(student_name, marks);
+END;
